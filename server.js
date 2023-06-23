@@ -15,10 +15,10 @@ app.use(
 console.log("listening server");
 
 
-app.use(express.static("./build"));
-// app.get("/", function (req, res) {
-//   res.sendFile(path.join(__dirname, "build", "index.html"));
-// });
+// app.use(express.static("./build"));
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 const home = require("./routers/home.js");
 const signup = require("./routers/signup.js");
