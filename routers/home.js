@@ -33,7 +33,7 @@ async function gethome(req, res) {
   const { videotype } = req.params;
   const video=(videotype.replace(/:/g, ""))
 
-  const data = await videos.find({videotype:video}).toArray();
+  const data = await videos.find({videotype:video}).exec();
   // const data = await videos.find({ postby: "email" }).toArray();
   console.log("Retrieved data:", data);
   res.json(data);
