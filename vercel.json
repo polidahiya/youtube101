@@ -1,13 +1,15 @@
 {
     "version": 2,
-    "routes": [
+    "builds":[
       {
         "src": "./server.js",
-        "dest": "/api/index.js"
-      },
+        "dest": "@vercel/node"
+      }
+    ],
+    "routes": [
       {
         "src": "/(.*)",
-        "dest": "/index.js"
+        "dest": "/"
       }
     ]
   }
