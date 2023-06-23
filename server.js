@@ -17,7 +17,7 @@ console.log("listening server");
 
 app.use(express.static("./build"));
 app.get("/", function (req, res) {
-  res.sendFile(path.join( "./build", "index.html"));
+  res.sendFile(path.join(__dirname+ "build", "index.html"));
 });
 
 const home = require("./routers/home.js");
