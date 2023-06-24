@@ -24,16 +24,18 @@ mongoose
 home.route("/home/:videotype").get(gethome).post(posthome);
 
     async function gethome(req, res) {
-
-      const { videotype } = req.params;
-      const video=(videotype.replace(/:/g, ""))
+      try {
+        const { videotype } = req.params;
+        const video = videotype.replace(/:/g, "");
     
-      const data = await videos.find({videotype:video}).toArray();
-      // const data = await videos.find({videotype:video}).exec();   mongo@6
-      // const data = await videos.find({ postby: "email" }).toArray();
-      console.log("Retrieved data:", data);
-      res.json(data);
-      console.log("home req");
+        const data = await videos.find({ videotype: video }).toArray();
+        console.log("Retrieved data:", data);
+        res.json(data);
+        console.log("home req");
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal server error" });
+      }
     }
     function posthome(req, res) {
       console.log("form submitted");
