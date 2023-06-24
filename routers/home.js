@@ -8,18 +8,17 @@ const app = express();
 app.use(cookieParser());
 
 //
-const db_link =
-  "mongodb+srv://polidahiya830:12er56ui90%40Poli@cluster0.pvrgiqn.mongodb.net/?retryWrites=true&w=majority";
+const db_link = "mongodb+srv://polidahiya830:12er56ui90%40Poli@cluster0.pvrgiqn.mongodb.net/?retryWrites=true&w=majority";
 
 //
 
 mongoose
   .connect(db_link)
-  .then(function () {
-    const client = new MongoClient(db_link);
-    const db = client.db("youtube");
+  .then(async function () {
+    const client =await new MongoClient(db_link);
+    const db =await client.db("youtube");
     // const users = db.collection("users");
-    const videos = db.collection("videos");
+    const videos =await db.collection("videos");
     console.log("db connected home");
     home.get("/home/:videotype", async (req, res) => {
       try {
