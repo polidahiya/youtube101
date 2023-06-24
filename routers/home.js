@@ -3,7 +3,6 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const { MongoClient } = require("mongodb");
 const home = express.Router();
-home.route("/home/:videotype").get(gethome).post(posthome);
 
 const app = express();
 app.use(cookieParser());
@@ -22,27 +21,31 @@ mongoose
   .connect(db_link)
   .then(function (db) {
     console.log("db connected home");
+home.route("/home/:videotype").get(gethome).post(posthome);
+
+    async function gethome(req, res) {
+
+      const { videotype } = req.params;
+      const video=(videotype.replace(/:/g, ""))
+    
+      const data = await videos.find({videotype:video}).toArray();
+      // const data = await videos.find({videotype:video}).exec();   mongo@6
+      // const data = await videos.find({ postby: "email" }).toArray();
+      console.log("Retrieved data:", data);
+      res.json(data);
+      console.log("home req");
+    }
+    function posthome(req, res) {
+      console.log("form submitted");
+      console.log(req.body);
+      res.send("form submitted");
+    }
   })
   .catch(function (err) {
     console.log(err);
   });
 //
 
-async function gethome(req, res) {
 
-  const { videotype } = req.params;
-  const video=(videotype.replace(/:/g, ""))
-
-  const data = await videos.find({videotype:video}).exec();
-  // const data = await videos.find({ postby: "email" }).toArray();
-  console.log("Retrieved data:", data);
-  res.json(data);
-  console.log("home req");
-}
-function posthome(req, res) {
-  console.log("form submitted");
-  console.log(req.body);
-  res.send("form submitted");
-}
 
 module.exports = home;
